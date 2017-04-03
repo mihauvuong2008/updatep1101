@@ -1,0 +1,46 @@
+log 
+ngày 07/12/2016: cập nhật công việc của tôi: bổ sung số ngày thực hiện, trạng thái nhận việc của Phần việc chờ tiếp nhận
+ngày 10/12/2016: tiếp tục cập nhật "Công việc của tôi"
+ngày 10/12/2016: tiếp tục cập nhật "Công việc của tôi" - các icon, các form view văn bản, các ngoại lệ công việc của tôi, dừng chuyển giao
+	change type longblob database, nguồn sửa chữa bảo dưỡngngày 14/12/2016: hoàn tất cơ sở dữ liệu thông báo, hoàn tất thông báo TIẾP NHẬN, TRẢ LẠI công việc, đang thực hiên thông báo chuyển giao
+15/12/2016: thuc hien thong bao cho nguoi dung cung tham gia cong viec cac hoat dong taij CONG VIECCUATOI
+17/12/12/2016: hoàn thành người dùng, tài khoản của tôi, đang thực hiện danh sách tài khoản, quản lý quyền hạn
+18/12/2016 : thực hiện quản lý quyền hạn, tạo form chỉ sử dụng toolitem
+21/12/2016:  thực hiện sửa hầu hết form chỉ sử dụng toolitem, lập cơ sở dữ liệu danh mục loại xe, phương tiện giao thông, 
+	xây dựng bảng định mức xăng - dầu, thực hiện xây dựng cơ sở dữ liệu kỳ hạn thống kê xăng dầu và các form liên quan thống kê
+	quản lý tài khoản vẫn đang dang dở
+Tối 21/12 vẫn đang thực hiện Thống kê phương tiện giao thông, hoàn thành Kỳ hạn thống kê, đang tiếp tục xây dựng Phòng ban tham gia thống kês
+22/12/2016: Dự kiến sửa lại lệnh điều xe, tạo form riêng để xem, sửa thông tin; tạo NHOM_DONVI_THAMGIA_THONGKE của các kỳ hạn thông kê, gồm các phòng 
+	tham gia thống kê, từ đó lấy ra danh sách xe dử dụng trong kỳ hạn. tạo check box để xuất dữ liệu với danh sách xe tùy chọn;
+	Chiều 22/12: Sửa gần xong quản lý lệnh điều xe, còn xóa lệnh, chuyển sang hủy lệnh, lập người tạo lệnh, trạng thái hủy lệnh
+23/12/2016: tiếp tục hoàn thiện lệnh điều xe: nhập hiện trạng km, xăng tồn của xe, tính toán nhiên liệu lần trước, tồn xăng, dự đoán nhiên liệu cho chuyến đi 
+	theo định mức xe. Hoàn thiện menu, hủy lệnh tại lịch sử điều xe, 75% hoàn thành Thống kê xe nhờ các thông tin bổ sung từ lệnh điều xe.
+	Thay đổi Cách thu thập thông tin nhiên liệu: dùng chung nhiên liệu cho xăng và dầu, 
+	xây dựng công cụ quản lý thông tin ptgt: tạo menu sửa thông tin ptgt, thêm thuộc tính xăng - dầu cho ptgt
+	cơ bản xong các chức năng phần mềm. 
+		Bổ sung thêm chức năng ghi log file, 
+		Kiểm soát quyền hạn
+		24/12/2016: Chuẩn bị cho kiểm thử, gom các hàm chung về các object tổng quát, đẩy mạnh tối đa tính kế thừa, tạo các hàm với tên gợi nhớ, tạo các comment giải thích
+			rõ nội dung các hàm, chuẩn bị hiện thực các chức năng cuối cùng một cách chuyên nghiệp
+		28/12/2016: kiểm tra Lệnh điều xe: Các xe đang trong thời gian điều xe, hạn chế xuất lệnh. Lập Bảng thống kê, đồ thị thống kê các phần công việc
+		29/12/2016: Hoàn thành XYLINE ChART, sửa đề xuất nhập sai tháng, Thêm phần thông báo thông tin công việc cho người thực hiện phần việc trước và sau mỗi giai đoạn
+			tiếp tục xây dựng bảng hồ sơ công việc cho FORM quản lý công việc. Và hoàn thành các biểu đồ
+		
+		04/1/2017: chuyển sang hoàn tất thư viện đề xuất, tiếp tục xây dựng nhật ký công việc, 
+			Tối: gần hoàn thành nhật ký công việc, Thư viện đề xuất, phát hiện một số vấn đề lệnh điều xe, cho phép điều xe, thống kê phương tiện gia thông,
+				đồ thị chưa làm xong, tạo database cho LogSYSTEM  
+		05/01/2017: chuyen tat ca loi goi ham control_xxx ve mot doi tuong chinh: controler de de dang quan ly: hoàn thành
+		07/01/2017: Bắt đầu chạy thử log sys tem, và phân quyền thành công một số chức năng. Sửa chữa lệnh điều xe: ngày đi và ngày về giống nhau, hoàn thiện xem, tạo công việc sửa chữa, bảo dưỡng, mua sắm, thanh lý. 
+		11/01/2017: Hoàn thành phân quyền. Xây dựng dự thảo báo cáo thuyết trình
+		24/01/2017: sau một thời gian gián đoạn do làm báo tường 2017, Hiện thực Lịch bảo dưỡng và tiêu chuẩn bảo dưỡng.
+		04/02/2017: tiep tuc hien thuc va chay thu thanh cong bieu do grantt
+		07/02/2017: Hoan thanh gan xong Chức năng xem lịch bảo dưỡng, chức năng xem danh sách đề nghị, chưa xong tiêu chuẩn bảo dưỡng
+		08/2/2017: Xay dung form view ho so tại các đề xuất công việc, hoàn thiện các chức năng nguồn sửa chữa, bảo dưỡng... TESTTING tìm lỗi và tiếp tục sửa
+		24/2/2017: hoàn thành phiên bản 32 bit, hoàn thành mã hóa mật khẩu cơ sở dữ liệu, che giấu người dùng
+		25/2/2017: xây dựng kế hoạch kiểm thử.
+		22/03/2017: chuyển qua kiểm thử các chức năng, hoàn thành kiểm thử + sửa đổi thống kê lịch trình
+		
+		
+		
+		
+		

@@ -1,0 +1,115 @@
+CREATE TABLE Coquanbanhanh
+   (    
+          TenCoquanbanhanh          VARCHAR(100)     NOT NULL,
+          PRIMARY KEY(TenCoquanbanhanh)
+    )ENGINE= InnoDB;
+	
+CREATE TABLE Taphoso
+     (
+          MaTapHoso                    INTEGER NOT NULL AUTO_INCREMENT,
+          TenTaphoso                    VARCHAR(150),
+          GioithieuTaphoso          VARCHAR(300),
+          PRIMARY KEY(MaTapHoso) 
+     )ENGINE=InnoDB;
+	 
+CREATE TABLE Quyenhoso
+     (
+          MaQuyenHoso                INTEGER NOT NULL AUTO_INCREMENT,
+          TenQuyenhoso               VARCHAR(150),
+          GioithieuQuyenhoso            VARCHAR(300),
+          MaTapHoso                   INTEGER (10),
+		  CONSTRAINT FOREIGN KEY (MaTapHoso) REFERENCES Taphoso(MaTapHoso) ON DELETE CASCADE ON UPDATE CASCADE,
+          PRIMARY KEY(MaQuyenHoso) 
+     )ENGINE=InnoDB;
+
+CREATE TABLE Vanban
+   (    
+          Mavanban                           INTEGER NOT NULL AUTO_INCREMENT,
+          Sovanban                           VARCHAR(30),
+          Soden                                VARCHAR(20),
+          NgaythangNhanVanBan        DATE,
+          NgaythangBanhanh              DATE                NOT NULL,
+          LoaiVanBan                         VARCHAR(20),
+          Domat                                VARCHAR(15),
+          Trichyeu                             VARCHAR(350),
+          TrichDan                             VARCHAR(350),
+          NguoiKy                              VARCHAR(50),
+          TenCoquanbanhanh             VARCHAR(100),
+          MaQuyenHoso                     INTEGER, 
+          STT                                   INTEGER,
+          Solanxem                           INTEGER,
+          Noinhan                              VARCHAR(150),
+          Canboxuly                           VARCHAR(100),
+          INDEX (NgaythangBanhanh),
+          INDEX (STT),
+		  CONSTRAINT FOREIGN KEY (TenCoquanbanhanh) REFERENCES Coquanbanhanh(TenCoquanbanhanh) ON DELETE CASCADE ON UPDATE CASCADE,
+		  CONSTRAINT FOREIGN KEY (MaQuyenHoso) REFERENCES Quyenhoso(MaQuyenHoso) ON DELETE CASCADE ON UPDATE CASCADE,
+          CONSTRAINT pk_Vanban PRIMARY KEY(Mavanban)
+    )ENGINE=InnoDB;
+    
+CREATE TABLE Tukhoa
+   (      TenTukhoa                    VARCHAR(30) NOT NULL NOT NULL,
+          PRIMARY KEY (TenTukhoa)
+    )ENGINE=InnoDB;
+
+CREATE TABLE Vanban_Tukhoa
+    (    
+          TenTukhoa                    VARCHAR(30), 
+          Mavanban                    INTEGER,
+		  CONSTRAINT FOREIGN KEY (TenTukhoa) REFERENCES Tukhoa(TenTukhoa) ON DELETE CASCADE ON UPDATE CASCADE,
+		  CONSTRAINT FOREIGN KEY (Mavanban) REFERENCES Vanban(Mavanban) ON DELETE CASCADE ON UPDATE CASCADE,
+          PRIMARY KEY(TenTukhoa, Mavanban)
+     )ENGINE=InnoDB;
+      
+       DROP  table vanban_tukhoa;
+       DROP  table tukhoa;
+       DROP  table vanban;
+       DROP  table Coquanbanhanh;
+       DROP  table Quyenhoso;
+       DROP  table Taphoso;
+      
+       // data
+       INSERT INTO Coquanbanhanh VALUES("Bocongan");
+       INSERT INTO Coquanbanhanh VALUES("No data");
+	   
+       INSERT INTO Taphoso VALUES("001","Nang luong thang ham","nang luong thang ham 2014");
+       INSERT INTO Taphoso VALUES("002","Huong dan nang luong thang ham","nang luong thang ham 2014");
+       INSERT INTO Taphoso VALUES("003","Thi dua khen thuong","Thi dua khen thuong 2014");
+       INSERT INTO Taphoso VALUES("-1","Dang xu ly","cac cong van dang xu ly tam thoi o day");
+       INSERT INTO Taphoso VALUES("004","Huong dan Thi dua khen thuong","Thi dua khen thuong 2014");
+      
+       INSERT INTO Quyenhoso VALUES("001","Huong dan NLTH 2014","","002");
+       INSERT INTO Quyenhoso VALUES("002","Huong dan TDKT 2014","","004");
+       INSERT INTO Quyenhoso VALUES("-1","Dang xu ly","","-1");
+	   
+       INSERT INTO tukhoa VALUES("Bao cao");
+       INSERT INTO tukhoa VALUES("Huong dan");
+       INSERT INTO tukhoa VALUES("Tien");
+	   
+       INSERT INTO vanban VALUES("1","69/DX-P6","1024", "2014-5-10", "2014-5-15", "bao cao de xuat", "khong mat", "de xuat mua xe", "", "Nguyen Hong Nhung", "Bocongan", "001",1,0,"Phong 1, Phong 2", "Nguyen Van A");
+       INSERT INTO vanban VALUES("2","68/DX-P6","1025", "2014-5-10", "2014-5-17", "bao cao de xuat", "khong mat", "de xuat mua xe", "", "Nguyen Hong Nhung", "Bocongan", "002",1,0,"Phong 1, Phong 2", "Nguyen Van A");
+       INSERT INTO vanban VALUES("3","67/DX-P6","1026",  "2014-5-10", "2014-5-18", "bao cao de xuat", "khong mat", "de xuat mua xe", "", "Nguyen Hong Nhung", "Bocongan", "001",2,0,"Phong 1, Phong 2", "Nguyen Van A");
+       INSERT INTO vanban VALUES("4","66/DX-P6","1027",  "2014-5-10", "2014-5-19", "bao cao de xuat", "khong mat", "de xuat mua xe", "", "Nguyen Hong Nhung", "Bocongan", "002",3,0,"Phong 1, Phong 2", "Nguyen Van A");
+       INSERT INTO vanban VALUES("5","65/DX-P6","1028",  "2014-5-10", "2014-5-12", "bao cao de xuat", "khong mat", "de xuat mua xe", "", "Nguyen Hong Nhung", "Bocongan", "001",4,0,"Phong 1, Phong 2", "Nguyen Van A");
+       
+	   INSERT INTO vanban_tukhoa (Tentukhoa, Mavanban) VALUES("Bao cao", "1");
+
+
+
+      
+       // update
+      
+      
+       ALTER TABLE Coquanbanhanh MODIFY Tencoquanbanhanh VARCHAR(100);
+set foreign_key_checks = 0;      // disable 
+set foreign_key_checks = 1; // enable 
+
+       ALTER TABLE vanban MODIFY COLUMN mavanban INT auto_increment;
+
+       ALTER TABLE vanban MODIFY COLUMN STT INT auto_increment;
+      
+      
+      
+      
+      
+       

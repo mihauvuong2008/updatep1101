@@ -1,0 +1,5 @@
+﻿LOẠI TÀI SẢN (MÃ LOẠI TÀI SẢN, TÊN LOẠI TÀI SẢN)
+NHÓM TÀI SẢN (MÃ NHÓM TÀI SẢN, TÊN NHÓM TÀI SẢN)
+PHÂN NHÓM TÀI sẢN (MÃ PHÂN NHÓM, TÊN PHÂN NHÓM)
+TÀI SẢN (MÃ TÀI SẢN, TÊN - MÔ TẢ TÀI SẢN, )
+#99b4d1

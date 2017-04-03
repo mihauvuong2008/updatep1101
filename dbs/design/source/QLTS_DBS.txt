@@ -1,0 +1,488 @@
+//tao database
+CREATE DATABASE QuanlyPTTS;
+
+CREATE TABLE LOAI_TAISAN
+   (    
+		Ma_Loai_Tai_San  VARCHAR(15),
+		Ten_Loai_Tai_San VARCHAR(35),
+		CONSTRAINT pmk_loaitaisan PRIMARY KEY(Ma_Loai_Tai_San)
+   )ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+   
+CREATE TABLE NHOM_TAISAN
+   (    
+		Ma_Nhom_Tai_San  VARCHAR(15),
+		Ten_Nhom_Tai_San VARCHAR(35),
+		Ma_Loai_Tai_San  VARCHAR(15),
+		CONSTRAINT pmk_nhomtaisan PRIMARY KEY(Ma_Nhom_Tai_San),
+		CONSTRAINT FOREIGN KEY (Ma_Loai_Tai_San) REFERENCES LOAI_TAISAN(Ma_Loai_Tai_San)
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+   
+CREATE TABLE PHAN_NHOM_TAISAN
+   (    
+		Ma_PhanNhom_Tai_San  VARCHAR(15),
+		Ten_PhanNhom_Tai_San VARCHAR(35),
+		Ma_Nhom_Tai_San  VARCHAR(15),
+		CONSTRAINT pmk_phannhomtaisan PRIMARY KEY(Ma_PhanNhom_Tai_San),
+		CONSTRAINT FOREIGN KEY (Ma_Nhom_Tai_San) REFERENCES NHOM_TAISAN(Ma_Nhom_Tai_San)
+   )ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+   
+   CREATE TABLE PHONG_BAN
+   (    
+		Ma_Phongban  VARCHAR(15),
+		Ten_Phong_ban VARCHAR(35),
+		Gioithieu_Phongban  VARCHAR(150),
+		CONSTRAINT PRIMARY KEY(Ma_Phongban)
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+   
+   
+    
+CREATE TABLE Taisan
+   (    
+          Ma_tai_san          VARCHAR(15)     NOT NULL,
+          CONSTRAINT PRIMARY KEY(Ma_tai_san),
+		  Ten_tai_san VARCHAR(300)     NOT NULL,
+		  Model VARCHAR(150)     NOT NULL,
+		  Seri VARCHAR(150)     NOT NULL,
+		  Ngay_Su_Dung DATE,
+		  Xuat_xu VARCHAR(15),
+		  Bao_hanh VARCHAR(15),
+		  Tinh_Trang VARCHAR(15),
+		  Trang_Thai VARCHAR(15),
+		  Don_Vi_Tinh VARCHAR(15),
+		  Nguyen_Gia INTEGER,
+		  Ghi_Chu VARCHAR(300),
+		  Ma_PhanNhom_Tai_San VARCHAR(15),
+		  Ma_Dvi_Sudung VARCHAR(15),
+		  Ma_Dvi_Quanly VARCHAR(15),
+		  
+		  CONSTRAINT FOREIGN KEY (Ma_PhanNhom_Tai_San) REFERENCES PHAN_NHOM_TAISAN(Ma_PhanNhom_Tai_San),
+		  CONSTRAINT FOREIGN KEY (Ma_Dvi_Sudung) REFERENCES PHONG_BAN(Ma_Phongban),
+		  CONSTRAINT FOREIGN KEY (Ma_Dvi_Quanly) REFERENCES PHONG_BAN(Ma_Phongban)
+		  
+    )ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+	
+	
+CREATE TABLE PHU_KIEN
+   (    
+          Ma_Phukien VARCHAR(15)     NOT NULL,
+		  Ten_Phukien VARCHAR(150)     NOT NULL,
+		  Model VARCHAR(40),
+		  Seri VARCHAR(40),
+		  Nguyen_Gia INTEGER,
+		  Ma_tai_san  VARCHAR(150)     NOT NULL,
+          CONSTRAINT FOREIGN KEY (Ma_tai_san) REFERENCES Taisan(Ma_tai_san),
+		  CONSTRAINT PRIMARY KEY(Ma_Phukien)
+    )ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ 
+CREATE TABLE NGUOIDUNG
+   (    
+          Ten_Tai_khoan VARCHAR(15)     NOT NULL,
+		  Mat_khau VARCHAR(15)     NOT NULL,
+		  Ten_Canbo VARCHAR(50),
+		  Gioi_thieu VARCHAR(240),
+		  TrangThai_DangNhap BOOLEAN DEFAULT FALSE,
+		  Ma_Phongban  VARCHAR(15),
+		  CONSTRAINT PRIMARY KEY(Ten_Tai_khoan),
+          CONSTRAINT FOREIGN KEY (Ma_Phongban) REFERENCES PHONG_BAN(Ma_Phongban)
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+		
+		
+CREATE TABLE DOT_GIAMTAISAN
+   (    
+          Ma_Dot_Giam VARCHAR(15)   NOT NULL,
+		  Ten_Dotgiam VARCHAR(15),
+		  Ly_DoGiam INTEGER(6),
+		  Ngay_giam DATE,
+		  Mo_ta  VARCHAR(250),
+		  Ma_Nguon_Giam VARCHAR(15)   NOT NULL,
+		  CONSTRAINT FOREIGN KEY (Ma_Nguon_Giam) REFERENCES NGUON_GIAM(Ma_Nguon_Giam),
+		  CONSTRAINT FOREIGN KEY (Ma_Nguon_Giam) REFERENCES NGUON_GIAM(Ma_Nguon_Giam),
+		  CONSTRAINT PRIMARY KEY(Ma_Dot_Giam)
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+		
+CREATE TABLE NGUON_GIAM
+   (    
+          Ma_Nguon_Giam VARCHAR(15)   NOT NULL,
+		  Ten_Nguongiam VARCHAR(15),
+		  Gioi_thieu VARCHAR(150),
+		  Lien_he VARCHAR(100),
+		  CONSTRAINT PRIMARY KEY(Ma_Nguon_Giam)
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+	
+	CREATE TABLE DOT_TANGTAISAN
+   (    
+          Ma_Dot_tang VARCHAR(15)   NOT NULL,
+		  Ten_Dottang VARCHAR(15),
+		  Ly_Dotang INTEGER(6),
+		  Ngay_tang DATE,
+		  Mo_ta  VARCHAR(250),
+		  Ma_Nguon_tang VARCHAR(15)   NOT NULL,
+		  CONSTRAINT FOREIGN KEY (Ma_Nguon_tang) REFERENCES NGUON_TANG(Ma_Nguon_tang),
+		  CONSTRAINT PRIMARY KEY(Ma_Dot_tang)
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+		
+CREATE TABLE NGUON_TANG
+   (    
+          Ma_Nguon_tang VARCHAR(15)   NOT NULL,
+		  Ten_Nguontang VARCHAR(15),
+		  Gioi_thieu VARCHAR(150),
+		  Lien_he VARCHAR(100),
+		  CONSTRAINT PRIMARY KEY(Ma_Nguon_tang)
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+	
+	CREATE TABLE TAISAN_DOT_TANGTAISAN
+   (    
+		Ma_tai_san VARCHAR(15)   NOT NULL,
+		Ma_Dot_tang VARCHAR(15)   NOT NULL,
+		CONSTRAINT PRIMARY KEY(Ma_tai_san,Ma_Dot_tang),
+		CONSTRAINT FOREIGN KEY (Ma_tai_san) REFERENCES TAISAN(Ma_tai_san),
+		CONSTRAINT FOREIGN KEY (Ma_Dot_tang) REFERENCES DOT_TANGTAISAN(Ma_Dot_tang)
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+	
+	
+CREATE TABLE TAISAN_DOT_GIAMTAISAN
+   (    
+		Ma_tai_san VARCHAR(150)   NOT NULL,
+		Ma_Dot_Giam VARCHAR(15)   NOT NULL,
+		CONSTRAINT PRIMARY KEY(Ma_tai_san,Ma_Dot_Giam),
+		CONSTRAINT FOREIGN KEY (Ma_tai_san) REFERENCES TAISAN(Ma_tai_san),
+		CONSTRAINT FOREIGN KEY (Ma_Dot_Giam) REFERENCES DOT_GIAMTAISAN(Ma_Dot_Giam)
+		 
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+	
+
+CREATE TABLE CONG_VIEC
+   (    
+		Ma_Cong_Viec VARCHAR(15)   NOT NULL,
+		Loai_Congviec INTEGER(6)   NOT NULL,
+		Ten_Congviec VARCHAR(150),
+		So_ngay_ThucHien_Du_Kien INT ,
+		Tinh_Trang BOOLEAN DEFAULT FALSE ,
+		So_ngay_ThucHien INT , 
+		So_de_Xuat VARCHAR(30),
+		Mo_ta VARCHAR(150), 
+		CONSTRAINT PRIMARY KEY(Ma_Cong_Viec)
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+	CREATE TABLE CONGVIEC_TAISAN
+   (    
+		Ma_tai_san VARCHAR(150)   NOT NULL,
+		Ma_Cong_Viec VARCHAR(15)   NOT NULL,
+		CONSTRAINT PRIMARY KEY(Ma_tai_san,Ma_Cong_Viec),
+		CONSTRAINT FOREIGN KEY (Ma_tai_san) REFERENCES TAISAN(Ma_tai_san),
+		CONSTRAINT FOREIGN KEY (Ma_Cong_Viec) REFERENCES CONG_VIEC(Ma_Cong_Viec)
+		 
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+	
+		CREATE TABLE DOT_DE_XUAT
+   (    
+		Ma_dot_de_xuat VARCHAR(15)   NOT NULL,
+		Thoi_gian_bat_dau DATE,
+		Thoi_gian_du_kien_Hoan_thanh INT,
+		Tinh_Trang_HoanThanh INTEGER(3),
+		Thoi_gian_ket_thuc DATE,
+		Ghi_chu VARCHAR(200),
+		Ma_Cong_Viec VARCHAR(15)   NOT NULL,
+		CONSTRAINT PRIMARY KEY(Ma_dot_de_xuat),
+		CONSTRAINT FOREIGN KEY (Ma_Cong_Viec) REFERENCES CONG_VIEC(Ma_Cong_Viec)
+		 
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+	
+	CREATE TABLE DOT_DE_XUAT_CANBO
+   (    
+		Ma_dot_de_xuat VARCHAR(15)   NOT NULL,
+		Ten_Tai_khoan VARCHAR(15)   NOT NULL,
+		CONSTRAINT PRIMARY KEY(Ma_dot_de_xuat,Ten_Tai_khoan),
+		CONSTRAINT FOREIGN KEY (Ma_dot_de_xuat) REFERENCES DOT_DE_XUAT(Ma_dot_de_xuat),
+		CONSTRAINT FOREIGN KEY (Ten_Tai_khoan) REFERENCES NGUOIDUNG(Ten_Tai_khoan)
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+	
+		CREATE TABLE DOT_THUC_HIEN
+   (    
+		Ma_dot_thuc_hien VARCHAR(15)   NOT NULL,
+		Thoi_gian_bat_dau DATE,
+		Thoi_gian_du_kien_Hoan_thanh INT,
+		Tinh_Trang_HoanThanh INTEGER(3),
+		Thoi_gian_ket_thuc DATE,
+		Ghi_chu VARCHAR(200),
+		Ma_Cong_Viec VARCHAR(15)   NOT NULL,
+		CONSTRAINT PRIMARY KEY(Ma_dot_thuc_hien),
+		CONSTRAINT FOREIGN KEY (Ma_Cong_Viec) REFERENCES CONG_VIEC(Ma_Cong_Viec)
+		 
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+	
+	
+	CREATE TABLE DOT_THUC_HIEN_CANBO
+   (    
+		Ma_dot_thuc_hien VARCHAR(15)   NOT NULL,
+		Ten_Tai_khoan VARCHAR(15)   NOT NULL,
+		CONSTRAINT PRIMARY KEY(Ma_dot_thuc_hien,Ten_Tai_khoan),
+		CONSTRAINT FOREIGN KEY (Ma_dot_thuc_hien) REFERENCES DOT_THUC_HIEN(Ma_dot_thuc_hien),
+		CONSTRAINT FOREIGN KEY (Ten_Tai_khoan) REFERENCES NGUOIDUNG(Ten_Tai_khoan)
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+	
+	
+		CREATE TABLE DOT_NGHIEM_THU
+   (    
+		Ma_dot_nghiem_thu VARCHAR(15)   NOT NULL,
+		Thoi_gian_bat_dau DATE,
+		Thoi_gian_du_kien_Hoan_thanh INT,
+		Tinh_Trang_HoanThanh INTEGER(3),
+		Thoi_gian_ket_thuc DATE,
+		Ghi_chu VARCHAR(200),
+		Ma_Cong_Viec VARCHAR(15)   NOT NULL,
+		CONSTRAINT PRIMARY KEY(Ma_dot_nghiem_thu),
+		CONSTRAINT FOREIGN KEY (Ma_Cong_Viec) REFERENCES CONG_VIEC(Ma_Cong_Viec) 
+		 
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+	
+	CREATE TABLE DOT_NGHIEM_THU_CANBO
+   (    
+		Ma_dot_nghiem_thu VARCHAR(15)   NOT NULL,
+		Ten_Tai_khoan VARCHAR(15)   NOT NULL,
+		CONSTRAINT PRIMARY KEY(Ma_dot_nghiem_thu,Ten_Tai_khoan),
+		CONSTRAINT FOREIGN KEY (Ma_dot_nghiem_thu) REFERENCES DOT_NGHIEM_THU(Ma_dot_nghiem_thu) ,
+		CONSTRAINT FOREIGN KEY (Ten_Tai_khoan) REFERENCES NGUOIDUNG(Ten_Tai_khoan)  
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+	
+		CREATE TABLE DOT_QUYET_TOAN
+   (    
+		Ma_dot_quyet_toan VARCHAR(15)   NOT NULL,
+		Thoi_gian_bat_dau DATE,
+		Thoi_gian_du_kien_Hoan_thanh INT,
+		Tinh_Trang_HoanThanh INTEGER(3),
+		Thoi_gian_ket_thuc DATE,
+		Ghi_chu VARCHAR(200),
+		Ma_Cong_Viec VARCHAR(15)   NOT NULL,
+		CONSTRAINT PRIMARY KEY(Ma_dot_quyet_toan),
+		CONSTRAINT FOREIGN KEY (Ma_Cong_Viec) REFERENCES CONG_VIEC(Ma_Cong_Viec)  
+		 
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+	
+	CREATE TABLE DOT_QUYET_TOAN_CANBO
+   (    
+		Ma_dot_quyet_toan VARCHAR(15)   NOT NULL,
+		Ten_Tai_khoan VARCHAR(15)   NOT NULL,
+		CONSTRAINT PRIMARY KEY(Ma_dot_quyet_toan,Ten_Tai_khoan),
+		CONSTRAINT FOREIGN KEY (Ma_dot_quyet_toan) REFERENCES DOT_QUYET_TOAN(Ma_dot_quyet_toan),
+		CONSTRAINT FOREIGN KEY (Ten_Tai_khoan) REFERENCES NGUOIDUNG(Ten_Tai_khoan) 
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+	
+		
+	CREATE TABLE ROLE
+   (    
+			Ma_Quyen     INTEGER 		NOT NULL AUTO_INCREMENT,
+          CONSTRAINT PRIMARY KEY(Ma_Quyen),
+		  Ten_Quyen VARCHAR(150)    	NOT NULL,
+		  Mo_ta VARCHAR(250),
+		  Them_nguoi_dung 				BOOLEAN DEFAULT FALSE,
+		  Phan_quyen_nguoi_dung 		BOOLEAN DEFAULT FALSE,
+		  Xem_Thongtin_nguoi_dung 		BOOLEAN DEFAULT FALSE,
+		  Xoa_nguoi_dung 				BOOLEAN DEFAULT FALSE,
+		  Them_thongtin_taisan	 		BOOLEAN DEFAULT FALSE,
+		  Xem_thongtin_taisan 			BOOLEAN DEFAULT FALSE,
+		  Sua_thongtin_taisan 			BOOLEAN DEFAULT FALSE,
+		  Xoa_thongtin_taisan		 	BOOLEAN DEFAULT FALSE,
+		  Them_congviec				 	BOOLEAN DEFAULT FALSE,
+		  Xem_thongtin_congviec 		BOOLEAN DEFAULT FALSE,
+		  Sua_thongtin_congviec 		BOOLEAN DEFAULT FALSE,
+		  Xoa_congviec			 		BOOLEAN DEFAULT FALSE,
+		  Them_hoso				 		BOOLEAN DEFAULT FALSE,
+		  Xem_thongtin_hoso		 		BOOLEAN DEFAULT FALSE,
+		  Sua_thongtin_hoso		 		BOOLEAN DEFAULT FALSE,
+		  Xoa_hoso				 		BOOLEAN DEFAULT FALSE
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+	
+	CREATE TABLE ROLE_CANBO
+   (    
+		Ma_Quyen INTEGER  NOT NULL,
+		Ten_Tai_khoan VARCHAR(15)   NOT NULL,
+		CONSTRAINT PRIMARY KEY(Ma_Quyen,Ten_Tai_khoan),
+		CONSTRAINT FOREIGN KEY (Ma_Quyen) REFERENCES ROLE(Ma_Quyen) ,
+		CONSTRAINT FOREIGN KEY (Ten_Tai_khoan) REFERENCES NGUOIDUNG(Ten_Tai_khoan) 
+	)ENGINE= InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+	
+	
+	
+ //====================================================
+INSERT INTO PHONG_BAN VALUES("P1","Phòng 1","giới thiệu Phòng 1");
+INSERT INTO PHONG_BAN VALUES("P2","Phòng 2","giới thiệu Phòng 2");
+INSERT INTO PHONG_BAN VALUES("P3","Phòng 3","giới thiệu Phòng 3");
+INSERT INTO PHONG_BAN VALUES("P4","Phòng 4","giới thiệu Phòng 4");
+INSERT INTO PHONG_BAN VALUES("P5","Phòng 5","giới thiệu Phòng 5");
+INSERT INTO PHONG_BAN VALUES("P6","Phòng 6","giới thiệu Phòng 6");
+INSERT INTO PHONG_BAN VALUES("P7","Phòng 7","giới thiệu Phòng 7");
+
+INSERT INTO NGUOIDUNG VALUES("Administrator","123456","Administrator","tài khoản quản trị cao nhất",FALSE,"P7");
+INSERT INTO NGUOIDUNG VALUES("Lanhdaophong","123456","lanhdaophong","lanh dao phong",FALSE,"P7");
+INSERT INTO NGUOIDUNG VALUES("canboQlptts","123456","Administrator","can bo ql ptts",FALSE,"P7");
+
+INSERT INTO ROLE VALUES("001","Quản trị viên","quyền quản trị cao nhất",TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE);
+INSERT INTO ROLE_CANBO VALUES("001","Administrator");
+
+INSERT INTO LOAI_TAISAN VALUES("001","Loại tài sản 01");
+INSERT INTO NHOM_TAISAN VALUES("001","Nhóm tài sản 01", "001");
+INSERT INTO NHOM_TAISAN VALUES("002","Nhóm tài sản 02", "001");
+INSERT INTO PHAN_NHOM_TAISAN VALUES("001","Phân nhóm tài sản 1", "001");
+INSERT INTO PHAN_NHOM_TAISAN VALUES("002","Phân nhóm tài sản 2", "001");
+INSERT INTO PHAN_NHOM_TAISAN VALUES("003","Phân nhóm tài sản 3", "002");
+INSERT INTO PHAN_NHOM_TAISAN VALUES("004","Phân nhóm tài sản 4", "002");
+
+
+INSERT INTO TAISAN VALUES("001","tài sản 1", "MODEL1", "SERI1", "2014-5-12", "Trung Quốc", "06 tháng", "1", "1", "cái", "2000000", " ghi chú", "001", "P1", "P7");
+INSERT INTO TAISAN VALUES("002","tài sản 2", "MODEL1", "SERI1", "2014-5-12", "Trung Quốc", "06 tháng", "1", "1", "cái", "2000000", " ghi chú", "001", "P1", "P7");
+INSERT INTO TAISAN VALUES("003","tài sản 3", "MODEL1", "SERI1", "2014-5-12", "Trung Quốc", "06 tháng", "1", "1", "cái", "2000000", " ghi chú", "001", "P1", "P7");
+INSERT INTO TAISAN VALUES("004","tài sản 4", "MODEL1", "SERI1", "2014-5-12", "Trung Quốc", "06 tháng", "1", "1", "cái", "2000000", " ghi chú", "001", "P1", "P7");
+INSERT INTO TAISAN VALUES("005","tài sản 5", "MODEL1", "SERI1", "2014-5-12", "Trung Quốc", "06 tháng", "1", "1", "cái", "2000000", " ghi chú", "001", "P1", "P7");
+INSERT INTO TAISAN VALUES("006","tài sản 6", "MODEL1", "SERI1", "2014-5-12", "Trung Quốc", "06 tháng", "1", "1", "cái", "2000000", " ghi chú", "001", "P1", "P7");
+INSERT INTO TAISAN VALUES("007","tài sản 7", "MODEL1", "SERI1", "2014-5-12", "Trung Quốc", "06 tháng", "1", "1", "cái", "2000000", " ghi chú", "001", "P1", "P7");
+INSERT INTO TAISAN VALUES("008","tài sản 8", "MODEL1", "SERI1", "2014-5-12", "Trung Quốc", "06 tháng", "1", "1", "cái", "2000000", " ghi chú", "001", "P1", "P7");
+INSERT INTO TAISAN VALUES("009","tài sản 9", "MODEL1", "SERI1", "2014-5-13", "Trung Quốc", "06 tháng", "1", "1", "cái", "2000000", " ghi chú", "001", "P1", "P7");
+INSERT INTO TAISAN VALUES("010","tài sản 9ádasdasdasdad", "MODEL1", "SERI1", "2014-5-12", "Trung Quốc", "06 tháng", "1", "1", "cái", "2000000", " ghi chú", "001", "P1", "P7");
+INSERT INTO TAISAN VALUES("011","tài sản 9ádasd", "MODEL1MODEL1MODEL1", "SERI1", "2014-5-12", "Trung Quốc", "06 tháng", "1", "1", "cái", "2000000", " ghi chú", "001", "P1", "P7");
+INSERT INTO TAISAN VALUES("012","tài sản 9ádasda", "MODEL1MODEL1MODEL1MODEL1", "SERI1", "2014-5-12", "Trung Quốc", "06 tháng", "1", "1", "cái", "2000000", " ghi chú", "001", "P1", "P7");
+INSERT INTO TAISAN VALUES("013","tài sản 9ádasd", "MODEL1MODEL1MODEL1", "SERI1", "2014-5-12", "Trung Quốc", "06 tháng", "1", "1", "cái", "2000000", " ghi chú", "001", "P1", "P7");
+INSERT INTO TAISAN VALUES("014","tài sản 9ádasdadasdasdasdsadasd", "MODEL1MODEL1MODEL1MODEL1MODEL1MODEL1MODEL1MODEL1MODEL1", "SERI1SERI1SERI1SERI1SERI1", "2014-5-12", "Trung Quốc", "06 tháng", "1", "1", "cái", "2000000", " ghi chú", "001", "P1", "P7");
+
+
+INSERT INTO PHU_KIEN VALUES("001","phụ kiện 1", "MODEL1", "SERI1", "2000000", "001");
+INSERT INTO PHU_KIEN VALUES("002","phụ kiện 2", "MODEL1", "SERI1", "2000000", "001");
+INSERT INTO PHU_KIEN VALUES("003","phụ kiện 3", "MODEL1", "SERI1", "2000000", "001");
+INSERT INTO PHU_KIEN VALUES("004","phụ kiện 4", "MODEL1", "SERI1", "2000000", "001");
+
+
+INSERT INTO PHU_KIEN VALUES("005","phụ kiện 1", "MODEL1", "SERI1", "2000000", "003");
+INSERT INTO PHU_KIEN VALUES("006","phụ kiện 2", "MODEL1", "SERI1", "2000000", "003");
+INSERT INTO PHU_KIEN VALUES("007","phụ kiện 3", "MODEL1", "SERI1", "2000000", "003");
+INSERT INTO PHU_KIEN VALUES("008","phụ kiện 4", "MODEL1", "SERI1", "2000000", "003");
+
+INSERT INTO NGUON_TANG VALUES("001","A55", "Đơn vị chuyển tài sản Da96/01", "Đt: 0989204422");
+INSERT INTO NGUON_TANG VALUES("002","A56", "Đơn vị chuyển tài sản Da96/02", "Đt: 0989204422");
+INSERT INTO NGUON_TANG VALUES("003","A57", "Đơn vị chuyển tài sản Da96/03", "Đt: 0989204422");
+INSERT INTO NGUON_TANG VALUES("004","A58", "Đơn vị chuyển tài sản Da96/04", "Đt: 0989204422");
+
+
+INSERT INTO NGUON_GIAM VALUES("001","A455", "Đơn vị nhận tài sản Da96/01", "Đt: 0989204422");
+INSERT INTO NGUON_GIAM VALUES("002","A4556", "Đơn vị nhận tài sản Da96/02", "Đt: 0989204422");
+INSERT INTO NGUON_GIAM VALUES("003","A4557", "Đơn vị nhận tài sản Da96/03", "Đt: 0989204422");
+INSERT INTO NGUON_GIAM VALUES("004","A4558", "Đơn vị nhận tài sản Da96/04", "Đt: 0989204422");
+
+INSERT INTO DOT_TANGTAISAN VALUES("004","nhận bàn giao tài sản của X32", "1",  "2015-8-16",  "đợt nhận tài sản lần 1 năm 2016", "002");
+INSERT INTO DOT_TANGTAISAN VALUES("001","nhận bàn giao tài sản của X32", "1",  "2015-8-26",  "đợt nhận tài sản lần 1 năm 2016", "001");
+INSERT INTO DOT_TANGTAISAN VALUES("002","nhận bàn giao tài sản của X32", "1",  "2015-9-16",  "đợt nhận tài sản lần 1 năm 2016", "004");
+INSERT INTO DOT_TANGTAISAN VALUES("003","nhận bàn giao tài sản của X32", "1",  "2015-10-16",  "đợt nhận tài sản lần 1 năm 2016", "003");
+
+INSERT INTO CONG_VIEC VALUES("001","1", "bao duong xe may phong 2, thang 8/2015",  "8", "1", "15/DX-P2", "Bao duong 20 xe may Wave X");
+INSERT INTO CONG_VIEC VALUES("002","2", "bao duong xe may phong 2, thang 8/2015",  "8", "1", "15/DX-P2", "Bao duong 20 xe may Wave X");
+INSERT INTO CONG_VIEC VALUES("003","3", "bao duong xe may phong 2, thang 8/2015",  "8", "1", "15/DX-P2", "Bao duong 20 xe may Wave X");
+INSERT INTO CONG_VIEC VALUES("004","4", "bao duong xe may phong 2, thang 8/2015",  "8", "1", "15/DX-P2", "Bao duong 20 xe may Wave X");
+INSERT INTO CONG_VIEC VALUES("005","5", "bao duong xe may phong 2, thang 8/2015",  "8", "1", "15/DX-P2", "Bao duong 20 xe may Wave X"); 
+INSERT INTO CONG_VIEC VALUES("006","6", "bao duong xe may phong 2, thang 6/2015",  "8", "1", "16/DX-P2", "Bao duong 20 xe may Wave X"); 
+
+ 
+INSERT INTO CONGVIEC_TAISAN VALUES("001","001");
+INSERT INTO CONGVIEC_TAISAN VALUES("002","001");
+INSERT INTO CONGVIEC_TAISAN VALUES("003","001");
+INSERT INTO CONGVIEC_TAISAN VALUES("004","001");
+INSERT INTO CONGVIEC_TAISAN VALUES("006","001");
+
+
+INSERT INTO CONGVIEC_TAISAN VALUES("009","002");
+INSERT INTO CONGVIEC_TAISAN VALUES("009","002");
+INSERT INTO CONGVIEC_TAISAN VALUES("008","002");
+INSERT INTO CONGVIEC_TAISAN VALUES("007","002");
+INSERT INTO CONGVIEC_TAISAN VALUES("006","002");
+INSERT INTO CONGVIEC_TAISAN VALUES("005","002");
+
+INSERT INTO CONGVIEC_TAISAN VALUES("001","003");
+INSERT INTO CONGVIEC_TAISAN VALUES("002","003");
+INSERT INTO CONGVIEC_TAISAN VALUES("003","003");
+INSERT INTO CONGVIEC_TAISAN VALUES("004","003");
+INSERT INTO CONGVIEC_TAISAN VALUES("005","003");
+INSERT INTO CONGVIEC_TAISAN VALUES("006","003");
+
+INSERT INTO CONGVIEC_TAISAN VALUES("012","004");
+INSERT INTO CONGVIEC_TAISAN VALUES("011","004");
+
+INSERT INTO CONGVIEC_TAISAN VALUES("002","005");
+INSERT INTO CONGVIEC_TAISAN VALUES("001","006");
+
+
+INSERT INTO DOT_DE_XUAT VALUES("001","2014-5-12","8","1","2014-5-20","bao duong xe may phong 2", "001");
+INSERT INTO DOT_DE_XUAT VALUES("002","2014-5-12","8","1","2014-6-18","bao duong xe may phong 2", "002");
+INSERT INTO DOT_DE_XUAT VALUES("003","2014-5-15","8","1","2014-7-22","bao duong xe may phong 2", "003");
+INSERT INTO DOT_DE_XUAT VALUES("004","2014-3-22","8","1","2014-4-21","bao duong xe may phong 2", "004");
+INSERT INTO DOT_DE_XUAT VALUES("005","2014-5-12","8","1","2014-5-25","bao duong xe may phong 2", "005");
+
+
+INSERT INTO DOT_QUYET_TOAN VALUES("005","2014-5-11","8","1","2014-6-25","bao duong xe may phong 2", "005");
+
+
+	
+//==============================================================================
+SELECT * FROM DOT_TANGTAISAN WHERE Ngay_tang IN (SELECT max(Ngay_tang) FROM DOT_TANGTAISAN); 
+
+
+//==============================================================================
+		DROP  table ROLE_CANBO;
+		DROP  table ROLE;
+		DROP  table DOT_QUYET_TOAN_CANBO;
+		DROP  table DOT_QUYET_TOAN;
+		DROP  table DOT_NGHIEM_THU_CANBO;
+		DROP  table DOT_NGHIEM_THU;
+		DROP  table DOT_THUC_HIEN_CANBO;
+		DROP  table DOT_THUC_HIEN;
+		DROP  table DOT_DE_XUAT_CANBO;
+		DROP  table DOT_DE_XUAT;
+		DROP  table CONGVIEC_TAISAN;
+		DROP  table CONG_VIEC;
+		DROP  table TAISAN_DOT_GIAMTAISAN;
+		DROP  table TAISAN_DOT_TANGTAISAN;
+		DROP  table NGUON_TANG_DOT_TANGTAISAN;
+		DROP  table NGUON_TANG;
+		DROP  table DOT_TANGTAISAN;
+		DROP  table NGUON_GIAM_DOT_GIAMTAISAN;
+		DROP  table NGUON_GIAM;
+		DROP  table DOT_GIAMTAISAN;
+		DROP  table NGUOIDUNG;
+		DROP  table PHU_KIEN;
+		DROP  table TAISAN;
+		DROP  table PHONG_BAN;
+		DROP  table PHAN_NHOM_TAISAN;
+		DROP  table NHOM_TAISAN;
+		DROP  table LOAI_TAISAN; 
+      
+//==============================================================================
+
+select 	ROLE.Ma_Quyen, Ten_Quyen, Mo_ta, Them_nguoi_dung, 
+		Phan_quyen_nguoi_dung, Xoa_nguoi_dung, 
+		Xem_thongtin_taisan, Sua_thongtin_taisan, 
+		Them_congviec, Sua_thongtin_congviec, 
+		Xoa_congviec, Them_hoso, Sua_thongtin_hoso, Xoa_hoso
+		from ROLE, ROLE_CANBO, Nguoidung where ROLE_CANBO.Ten_Tai_khoan = nguoidung.Ten_Tai_khoan AND ROLE_CANBO.Ma_Quyen=ROLE.Ma_Quyen AND nguoidung.Ten_Tai_khoan = 'Administrator';
+//==============================================================================
+	   INSERT INTO vanban_tukhoa (Tentukhoa, Mavanban) VALUES("Bao cao", "1");
+
+//===========================================Start command line===========================
+mysql -u root -p --default-character-set=utf8
+==================================================================================
+//===========================================import data=================================
+source D:/Projects/Project P1101/dbs/taisan.txt;
+=========================================================================
+      
+       // update
+      
+      
+       ALTER TABLE Coquanbanhanh MODIFY Tencoquanbanhanh VARCHAR(150);
+set foreign_key_checks = 0;      // disable 
+set foreign_key_checks = 1; // enable 
+
+       ALTER TABLE vanban MODIFY COLUMN mavanban INT auto_increment;
+
+       ALTER TABLE vanban MODIFY COLUMN STT INT auto_increment; 
+      
+      
+      
+      
+       
